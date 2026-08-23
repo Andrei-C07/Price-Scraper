@@ -20,7 +20,7 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Install Firefox
-        uses: browser-actions/setup-firefox@v2
+        uses: browser-actions/setup-firefox@v1
 
       - name: Restore dependencies
         run: dotnet restore
