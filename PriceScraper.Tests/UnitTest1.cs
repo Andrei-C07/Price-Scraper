@@ -13,7 +13,10 @@ public class Tests
     [SetUp]
     public void Setup()
     {
-        driver = new FirefoxDriver();
+        var options = new FirefoxOptions();
+        options.AddArgument("--headless");
+    
+        driver = new FirefoxDriver(options);
         wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         driver.Navigate().GoToUrl("https://www.saucedemo.com");
     }
