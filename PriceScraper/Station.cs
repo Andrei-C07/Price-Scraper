@@ -16,4 +16,9 @@ public class Station
         address = this.address;
         price = this.price;
     }
+
+    public Decimal GetPrice()
+    {
+        return price;
+    }
 }

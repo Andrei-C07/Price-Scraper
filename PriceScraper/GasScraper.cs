@@ -52,4 +52,16 @@ public class GasScraper
 
         return stationName;
     }
+
+    public Station? GetStation(string url)
+    {
+        var name = GetName(url);
+        var address = GetAddress(url);
+        var price = GetPrice(url);
+
+        if (name == null || address == null || price == null)
+            return null;
+
+        return new Station(name, url, address, price.Value);
+    }
 }

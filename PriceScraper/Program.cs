@@ -7,11 +7,11 @@ var scraper = new GasScraper();
 
 // ask usewr for url || address || station number || create List of pre-selected stations
 
-var price = scraper.GetPrice("https://leprixdugaz.ca/station/monteregie/couche-tard-256/1722");
+var station = scraper.GetStation("https://leprixdugaz.ca/station/monteregie/couche-tard-256/1722");
 
-if (price.HasValue)
+if (station != null)
 {
-    Console.WriteLine($"Gas Price => {price} ¢/L");
+    Console.WriteLine($"Gas Price => {station.GetPrice()} ¢/L");
 }
 else
 {
