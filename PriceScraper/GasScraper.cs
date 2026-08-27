@@ -6,12 +6,8 @@ namespace PriceScraper;
 
 public class GasScraper
 {
-    public Decimal? GetPrice(string url)
+    public Decimal? GetPrice(IWebDriver driver, WebDriverWait wait)
     {
-        using var driver = new FirefoxDriver();
-        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-
-        driver.Navigate().GoToUrl(url);
 
         var priceBlock = wait.Until(d =>
             d.FindElement(By.XPath("//div[contains(text(),'aujourd')]/preceding-sibling::div[1]"))
@@ -25,12 +21,8 @@ public class GasScraper
         return Decimal.Parse(priceText.Replace("¢", "").Trim());
     }
 
-    public String? GetAddress(string url)
+    public String? GetAddress(IWebDriver driver)
     {
-        using var driver = new FirefoxDriver();
-        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-
-        driver.Navigate().GoToUrl(url);
 
         var addressLink = driver.FindElement(By.CssSelector("a[href*='google.com/maps/dir']"));
         string address = addressLink.FindElement(By.TagName("span")).Text;
@@ -38,12 +30,8 @@ public class GasScraper
         return address;
     }
 
-    public String? GetName(string url)
+    public String? GetName(IWebDriver driver)
     {
-        using var driver = new FirefoxDriver();
-        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));   
-
-        driver.Navigate().GoToUrl(url);
 
         string stationName = driver.FindElement(By.TagName("h1")).Text;
 
@@ -55,9 +43,14 @@ public class GasScraper
 
     public Station? GetStation(string url)
     {
-        var name = GetName(url);
-        var address = GetAddress(url);
-        var price = GetPrice(url);
+        using var driver = new FirefoxDriver();
+        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+
+        driver.Navigate().GoToUrl(url);
+
+        var name = GetName(driver);
+        var address = GetAddress(driver);
+        var price = GetPrice(driver, wait);
 
         if (name == null || address == null || price == null)
             return null;
