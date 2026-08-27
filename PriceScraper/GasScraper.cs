@@ -43,7 +43,9 @@ public class GasScraper
 
     public Station? GetStation(string url)
     {
-        using var driver = new FirefoxDriver();
+        var options = new FirefoxOptions();
+        options.AddArgument("--headless");
+        using var driver = new FirefoxDriver(options);
         var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
         driver.Navigate().GoToUrl(url);
@@ -57,4 +59,6 @@ public class GasScraper
 
         return new Station(name, url, address, price.Value);
     }
+
+    //have the option to get the price and name on its own to display prices faster
 }
